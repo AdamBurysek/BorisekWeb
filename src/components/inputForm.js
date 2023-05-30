@@ -10,7 +10,13 @@ const InputForm = (props) => {
   };
 
   return (
-    <form className="input-group w-50 mt-5 m-auto mb-5">
+    <form
+      className="input-group w-50 mt-5 m-auto mb-5"
+      onSubmit={(e) => {
+        e.preventDefault();
+        props.getData(search);
+      }}
+    >
       <input
         type="text"
         className="form-control rounded"
