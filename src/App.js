@@ -1,23 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
+import "./App.css";
+import NavBar from "./components/navBar";
+import Search from "./components/search";
+import DataService from "./services/dataService";
+import Table from "./components/table";
+import NotFound from "./components/notFound";
 
 function App() {
+  let [path] = useState("");
+  let [tableData, setTableData] = useState([]);
+
+  const location = useLocation();
+  path = location.pathname;
+
+  console.log(tableData);
+
+  const getData = (filter) => {
+    DataService.postData(filter)
+      .then((response) => {
+        setTableData(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <NavBar path={path} />
+
+      <Routes>
+        <Route
+          path="/"
+          element={<Search getData={getData} tableData={tableData} />}
+        />
+        <Route path="/newtable" element={<Table />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
 }
