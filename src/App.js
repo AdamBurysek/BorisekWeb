@@ -15,8 +15,6 @@ function App() {
   const location = useLocation();
   path = location.pathname;
 
-  console.log(tableData);
-
   const getData = (filter) => {
     DataService.postData(filter)
       .then((response) => {
