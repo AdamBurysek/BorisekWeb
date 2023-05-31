@@ -11,11 +11,11 @@ function DynamicTable(props) {
     };
 
     const tdData = () => {
-      return props.tableData.map((data) => {
+      return props.tableData.map((data, id) => {
         return (
-          <tr>
+          <tr key={id}>
             {column.map((v) => {
-              return <td>{data[v]}</td>;
+              return <td key={data[v] + id}>{data[v]}</td>;
             })}
           </tr>
         );
@@ -30,7 +30,7 @@ function DynamicTable(props) {
     );
   } else {
     return (
-      <div class="alert alert-info container-sm text-center" role="alert">
+      <div className="alert alert-info container-sm text-center" role="alert">
         No Data
       </div>
     );
